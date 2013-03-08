@@ -41,13 +41,15 @@ if __name__ == "__main__":
         for plugin in urlw_p.plugins_list:
             urlw_p.run(plugin, sys.argv[1], faup_object)
 
+    elif source_info.startswith("file:"):
+        urls = urls_file.readlines()
+        for url in urls:
+            fauplib.decode(url)
+            faup_object = fauplib.get()
+            for plugin in urlw_p.plugins_list:
+                urlw_p.run(plugin, url, faup_object)
 
-#    file_urls=codecs.open(sys.argv[1],'r','ascii',errors='ignore')
-#    urls=file_urls.readlines()
-#    for url in urls:
-#        url=url.replace('\n','')
-#        print("URL:[%s]" % (url))
-#        f.decode(url, False)
-#        print("-----> Extracted TLD:%s" % f.get_tld())
+        urls_file.close()
+
     urlw_log.custom_log("Done")
     urlw_log.close()
